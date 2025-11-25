@@ -1,5 +1,4 @@
 {
   "name": "Safir Al Sham - Product and Offer Management",
-  "description": "A React application for managing products and creating offers for Safir Al Sham, supporting product addition, offer creation with delivery/transfer costs, and image export of the offer preview.",
-  "requestFramePermissions": []
+  "description": "A React application for managing products and creating offers for Safir Al Sham, supporting product addition, offer creation with delivery/transfer costs, and image export of the offer preview."
 }

@@ -1,13 +1,17 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { Product } from '../types';
 import Button from './Button';
+import Input from './Input'; // Import Input component
 
 interface ProductListProps {
   products: Product[];
   onAddToOffer: (product: Product) => void;
+  onExportProducts: () => void;
+  searchTerm: string; // New prop for search term
+  onSearchChange: (term: string) => void; // New prop for search handler
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onAddToOffer }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, onAddToOffer, onExportProducts, searchTerm, onSearchChange }) => {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
 
   const toggleCategory = useCallback((category: string) => {
@@ -27,7 +31,31 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToOffer }) => 
 
   return (
     <div className="bg-white p-4 md:p-6 rounded-lg shadow-md mb-5">
-      <h4 className="text-xl font-bold mb-4">المنتجات</h4>
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="text-xl font-bold">المنتجات</h4>
+        {products.length > 0 && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={onExportProducts}
+            className="flex-shrink-0"
+          >
+            تصدير إلى Excel
+          </Button>
+        )}
+      </div>
+
+      <div className="mb-4">
+        <Input
+          id="productSearch"
+          type="text"
+          placeholder="بحث عن منتج..."
+          value={searchTerm}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="w-full"
+        />
+      </div>
+
       <div id="productsArea">
         {Object.entries(categorizedProducts).map(([category, productsInCat]) => (
           <div key={category} className="mb-3 last:mb-0">
@@ -43,7 +71,6 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToOffer }) => 
             <div
               className={`transition-all duration-300 ease-in-out overflow-hidden ${openCategories[category] ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}
             >
-              {/* Explicitly cast productsInCat to Product[] to ensure `map` method is recognized */}
               {(productsInCat as Product[]).map(product => (
                 <div key={product.id} className="flex items-center justify-between p-2 border-b border-gray-200 last:border-b-0">
                   <div className="flex-1 font-medium text-gray-700">{product.name}</div>
