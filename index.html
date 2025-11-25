@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>سفير الشام</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        font-family: "Tahoma", sans-serif;
+      }
+    }
+    @layer utilities {
+      /* Custom utility for product action buttons */
+      .action-btn {
+        @apply w-8 h-8 rounded-full border-none text-white text-lg flex items-center justify-center cursor-pointer;
+      }
+      .add-btn {
+        @apply bg-blue-600;
+      }
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "html2canvas": "https://aistudiocdn.com/html2canvas@^1.4.1",
+    "uuid": "https://aistudiocdn.com/uuid@^13.0.0",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+<body class="bg-gray-100 p-3">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
