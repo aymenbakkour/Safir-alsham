@@ -2,128 +2,57 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>سفير الشام – إدارة المنتجات والعروض</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+  <title>سفير الشام</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <style>
-    body { font-family: 'Tajawal', sans-serif; }
-    .container-wrapper { max-width: 780px; margin: auto; }
+    body { background: #f4f4f4; font-family: "Tahoma", sans-serif; }
+    .section-box { background: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.25rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06); }
 
-    .section-box {
-      background: #fff;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    .form-control { width: 100%; padding: 0.5rem; margin-top: 0.5rem; border-radius: 0.375rem; border:1px solid #d1d5db; box-sizing:border-box; font-size:16px; background-color:#fff; outline:none; transition:border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;}
+    .form-control:focus { border-color:transparent; box-shadow:0 0 0 2px rgba(59,130,246,0.5); }
+    .btn { width:100%; padding:0.75rem 1rem; border:none; border-radius:0.375rem; font-weight:600; color:white; cursor:pointer; transition:background-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out; outline:none;}
+    .btn-primary { background-color:#2563eb; } .btn-primary:hover { background-color:#1d4ed8; }
+    .btn-success { background-color:#10b981; } .btn-success:hover { background-color:#059669; }
+    .btn-danger { background-color:#ef4444; } .btn-danger:hover { background-color:#dc2626; }
+    .btn-indigo { background-color:#4f46e5; } .btn-indigo:hover { background-color:#4338ca; }
+    .btn-sm { padding:0.25rem 0.5rem; font-size:0.875rem; }
+    .btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+    .container-wrapper { max-width:64rem; margin:auto; padding-top:0.75rem; padding-bottom:0.75rem; }
+    .mb-4 { margin-bottom:1rem; } .mt-4 { margin-top:1rem; }
+
+    /* Products */
+    .category-header { background:#e9ecef; padding:0.5rem; border-radius:0.375rem; cursor:pointer; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+    .product-row { display:flex; justify-content:space-between; align-items:center; padding:0.5rem; border-bottom:1px solid #e5e7eb; }
+    .product-row:last-child { border-bottom:none; }
+    .product-name { flex:1; font-weight:500; }
+    .product-price { margin-left:1rem; color:#4b5563; }
+
+    /* زر إضافة دائري */
+    .add-btn-circle {
+      width:2rem; height:2rem; border-radius:50%; background:#0d6efd; color:white; border:none; font-size:1.25rem; display:flex; align-items:center; justify-content:center; cursor:pointer;
     }
+    .add-btn-circle:hover { background:#0b5ed7; }
 
-    .form-control {
-      border: 1px solid #ccc;
-      padding: 8px 10px;
-      border-radius: 8px;
-      width: 100%;
-    }
+    /* Offer items */
+    .offer-item { display:flex; justify-content:space-between; padding:0.5rem; border-bottom:1px solid #e5e7eb; }
+    .offer-item:last-child { border-bottom:none; }
+    .offer-item button { width:1.5rem; height:1.5rem; padding:0; font-size:0.875rem; }
 
-    .btn {
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-success { background: #059669; color: #fff; }
-    .btn-danger { background: #dc2626; color: #fff; }
-    .btn-indigo { background: #4f46e5; color: #fff; }
-
-    .category-box {
-      background: #f7f7f7;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      padding: 8px;
-    }
-
-    .category-header {
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 6px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .product-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #fff;
-      padding: 8px;
-      margin: 4px 0;
-      border-radius: 8px;
-      border: 1px solid #e5e7eb;
-    }
-
-    /* زر الإضافة: دائرة زرقاء */
-    .add-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      font-size: 20px;
-      line-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .add-btn:hover {
-      background: #1e4ec9;
-    }
-
-    .offer-item {
-      display: flex;
-      justify-content: space-between;
-      background: #fff;
-      padding: 8px;
-      margin-bottom: 6px;
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-    }
-
-    /* تصغير زر الحذف */
-    .offer-item button {
-      width: 22px;
-      height: 22px;
-      font-size: 14px;
-      padding: 0;
-      line-height: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
+    /* Preview */
+    #preview { border:2px solid #2563eb; padding:1rem; border-radius:1rem; background:white; text-align:center; min-height:150px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+    .preview-title { font-size:1.5rem; font-weight:bold; color:#0d6efd; }
   </style>
 </head>
-
 <body class="bg-gray-100 p-3">
-
   <div class="container-wrapper">
 
-    <h2 class="text-2xl font-extrabold text-center mb-4 text-gray-800">
-      سفير الشام – إدارة المنتجات والعروض
-    </h2>
+    <h2 class="text-2xl font-extrabold text-center mb-4 text-gray-800">سفير الشام – إدارة المنتجات والعروض</h2>
 
     <!-- إضافة منتج -->
     <div class="section-box">
       <h4 class="text-xl font-bold mb-4">إضافة منتج جديد</h4>
-
-      <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form id="productForm" class="grid grid-cols-1 md-grid-cols-2 gap-4">
         <input id="pName" class="form-control" type="text" placeholder="اسم المنتج">
         <select id="pCat" class="form-control">
           <option value="مواد غذائية">مواد غذائية</option>
@@ -132,7 +61,6 @@
           <option value="رصيد موبايل">رصيد موبايل</option>
         </select>
         <input id="pPrice" class="form-control" type="number" placeholder="السعر (€)" min="0.01" step="0.01">
-
         <button type="submit" class="btn btn-primary">إضافة المنتج</button>
       </form>
     </div>
@@ -143,28 +71,20 @@
         <h4 class="text-xl font-bold">المنتجات</h4>
         <button id="exportProductsBtn" class="btn btn-primary btn-sm">تصدير Excel</button>
       </div>
-
       <input id="productSearch" class="form-control mb-3" type="text" placeholder="بحث عن منتج...">
-
-      <div id="productsArea">
-        <p class="text-gray-500 text-center">لا توجد منتجات بعد.</p>
-      </div>
+      <div id="productsArea"><p class="text-gray-500 text-center">لا توجد منتجات بعد.</p></div>
     </div>
 
     <!-- عناصر العرض -->
     <div class="section-box">
       <h4 class="text-xl font-bold mb-4">عناصر العرض</h4>
-
-      <div id="offerItems">
-        <p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للعرض.</p>
-      </div>
+      <div id="offerItems"><p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للعرض.</p></div>
     </div>
 
     <!-- إنشاء العرض -->
     <div class="section-box">
       <h4 class="text-xl font-bold mb-4">إنشاء عرض</h4>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md-grid-cols-3 gap-4">
         <input id="customerName" type="text" class="form-control" placeholder="ادخل اسمك">
         <input id="customerWhatsApp" type="text" class="form-control" placeholder="رقم واتساب للتواصل">
         <input id="deliveryAddress" type="text" class="form-control" placeholder="عنوان التوصيل">
@@ -174,9 +94,8 @@
         المجموع النهائي: <span id="total" class="text-blue-600">0.00</span> €
       </h4>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <div class="grid grid-cols-1 md-grid-cols-2 gap-4 mt-4">
         <button id="showPreviewBtn" class="btn btn-success" disabled>معاينة العرض</button>
-
         <div class="flex flex-col gap-2">
           <input id="randomOfferMax" type="number" class="form-control" value="40" min="0" step="0.01">
           <button id="generateRandomOfferBtn" class="btn btn-indigo">إنشاء عرض عشوائي</button>
@@ -187,12 +106,7 @@
     <!-- المعاينة -->
     <div class="section-box">
       <h4 class="text-xl font-bold mb-4">معاينة العرض</h4>
-
-      <div id="preview"
-           class="border-2 border-blue-600 p-4 rounded-xl bg-white text-center min-h-[150px] flex flex-col justify-center items-center">
-        <p class="text-gray-500">قم بإنشاء عرض للمعاينة.</p>
-      </div>
-
+      <div id="preview"><p class="text-gray-500">قم بإنشاء عرض للمعاينة.</p></div>
       <button id="downloadImageBtn" class="btn btn-primary mt-4" disabled>تصدير كصورة</button>
     </div>
 
@@ -205,184 +119,103 @@
     let openCategories = {};
     let randomOfferMaxValue = 40;
 
-    function generateId() {
-      return Date.now().toString(36) + Math.random().toString(36).slice(2);
-    }
+    const productForm = document.getElementById("productForm");
+    const productsArea = document.getElementById("productsArea");
+    const pName = document.getElementById("pName");
+    const pCat = document.getElementById("pCat");
+    const pPrice = document.getElementById("pPrice");
+    const offerDiv = document.getElementById("offerItems");
+    const totalSpan = document.getElementById("total");
+    const previewDiv = document.getElementById("preview");
+    const searchInput = document.getElementById("productSearch");
+    const showPreviewBtn = document.getElementById("showPreviewBtn");
+    const downloadImageBtn = document.getElementById("downloadImageBtn");
+    const generateRandomOfferBtn = document.getElementById("generateRandomOfferBtn");
+    const randomOfferMaxInput = document.getElementById("randomOfferMax");
+
+    function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 
     function updateTotal() {
-      let total = offerItems.reduce((sum, item) => sum + item.price, 0);
-      document.getElementById("total").textContent = total.toFixed(2);
-
-      document.getElementById("showPreviewBtn").disabled = offerItems.length === 0;
-      document.getElementById("downloadImageBtn").disabled = offerItems.length === 0;
+      let total = offerItems.reduce((sum,i)=>sum+i.price,0);
+      totalSpan.textContent = total.toFixed(2);
+      showPreviewBtn.disabled = offerItems.length===0;
+      downloadImageBtn.disabled = offerItems.length===0;
     }
 
     function renderProducts() {
-      const area = document.getElementById("productsArea");
-      area.innerHTML = "";
-
-      let grouped = {};
-      products.forEach(p => {
-        if (searchTerm && !p.name.includes(searchTerm)) return;
-
-        if (!grouped[p.category]) grouped[p.category] = [];
+      productsArea.innerHTML="";
+      let grouped={};
+      products.forEach(p=>{
+        if(searchTerm && !p.name.includes(searchTerm)) return;
+        if(!grouped[p.category]) grouped[p.category]=[];
         grouped[p.category].push(p);
       });
-
-      if (products.length === 0) {
-        area.innerHTML = `<p class="text-gray-500 text-center">لا توجد منتجات بعد.</p>`;
-        return;
-      }
-
-      Object.keys(grouped).forEach(cat => {
-        const box = document.createElement("div");
-        box.className = "category-box";
-
-        const header = document.createElement("div");
-        header.className = "category-header";
-        header.innerHTML = `<span>${cat}</span> <span>▼</span>`;
-        header.onclick = () => {
-          openCategories[cat] = !openCategories[cat];
-          renderProducts();
-        };
-        box.appendChild(header);
-
-        if (openCategories[cat]) {
-          grouped[cat].forEach(p => {
-            const item = document.createElement("div");
-            item.className = "product-item";
-
-            item.innerHTML = `
-              <span>${p.name}</span>
-              <span>${p.price.toFixed(2)} €</span>
-              <button class="add-btn" onclick="addToOffer('${p.id}')">+</button>
-            `;
-
-            box.appendChild(item);
+      Object.keys(grouped).forEach(cat=>{
+        const catBox=document.createElement("div");
+        const catHeader=document.createElement("div");
+        catHeader.className="category-header";
+        catHeader.innerHTML=`<span>${cat}</span><span>▼</span>`;
+        catHeader.onclick=()=>{ openCategories[cat]=!openCategories[cat]; renderProducts(); };
+        catBox.appendChild(catHeader);
+        if(openCategories[cat]){
+          grouped[cat].forEach(p=>{
+            const item=document.createElement("div");
+            item.className="product-row";
+            item.innerHTML=`<span class="product-name">${p.name}</span><span class="product-price">${p.price.toFixed(2)} €</span><button class="add-btn-circle" onclick="addToOffer('${p.id}')">+</button>`;
+            catBox.appendChild(item);
           });
         }
+        productsArea.appendChild(catBox);
+      });
+      if(!products.length) productsArea.innerHTML=`<p class="text-gray-500 text-center">لا توجد منتجات بعد.</p>`;
+    }
 
-        area.appendChild(box);
+    function addToOffer(id){ const product=products.find(p=>p.id===id); offerItems.push({...product}); renderOfferItems(); updateTotal(); }
+    function removeFromOffer(index){ offerItems.splice(index,1); renderOfferItems(); updateTotal(); }
+    function renderOfferItems(){
+      if(!offerItems.length){ offerDiv.innerHTML=`<p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للعرض.</p>`; return; }
+      offerDiv.innerHTML="";
+      offerItems.forEach((item,index)=>{
+        const div=document.createElement("div"); div.className="offer-item";
+        div.innerHTML=`<p>${item.name}</p><p>${item.price.toFixed(2)} €</p><button class="btn btn-danger btn-sm" onclick="removeFromOffer(${index})">×</button>`;
+        offerDiv.appendChild(div);
       });
     }
 
-    function addToOffer(id) {
-      const product = products.find(p => p.id === id);
-      offerItems.push({ ...product });
-      renderOffer();
-      updateTotal();
-    }
-
-    function removeFromOffer(index) {
-      offerItems.splice(index, 1);
-      renderOffer();
-      updateTotal();
-    }
-
-    function renderOffer() {
-      const area = document.getElementById("offerItems");
-
-      if (offerItems.length === 0) {
-        area.innerHTML = `<p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للعرض.</p>`;
-        return;
-      }
-
-      area.innerHTML = "";
-
-      offerItems.forEach((item, i) => {
-        const div = document.createElement("div");
-        div.className = "offer-item";
-
-        div.innerHTML = `
-          <p>${item.name}</p>
-          <p>${item.price.toFixed(2)} €</p>
-          <button class="btn btn-danger btn-sm" onclick="removeFromOffer(${i})">×</button>
-        `;
-
-        area.appendChild(div);
-      });
-    }
-
-    document.getElementById("productForm").addEventListener("submit", e => {
+    productForm.addEventListener("submit",e=>{
       e.preventDefault();
-
-      const name = document.getElementById("pName").value;
-      const price = parseFloat(document.getElementById("pPrice").value);
-      const cat = document.getElementById("pCat").value;
-
-      if (!name || !price) return;
-
-      products.push({
-        id: generateId(),
-        name,
-        category: cat,
-        price
-      });
-
-      document.getElementById("pName").value = "";
-      document.getElementById("pPrice").value = "";
-
-      renderProducts();
+      if(!pName.value || !pPrice.value) return;
+      products.push({id:generateId(), name:pName.value, category:pCat.value, price:parseFloat(pPrice.value)});
+      pName.value=""; pPrice.value=""; renderProducts();
     });
+    searchInput.addEventListener("input",()=>{ searchTerm=searchInput.value; renderProducts(); });
 
-    document.getElementById("productSearch").addEventListener("input", e => {
-      searchTerm = e.target.value;
-      renderProducts();
-    });
-
-    document.getElementById("showPreviewBtn").addEventListener("click", () => {
-      const preview = document.getElementById("preview");
-
-      preview.innerHTML = `
+    showPreviewBtn.addEventListener("click",()=>{
+      previewDiv.innerHTML=`
         <h3 class="font-bold text-xl mb-2">💙 سفير الشام – عرض خاص</h3>
-
         <p><strong>الاسم:</strong> ${document.getElementById("customerName").value}</p>
         <p><strong>واتساب:</strong> ${document.getElementById("customerWhatsApp").value}</p>
         <p><strong>العنوان:</strong> ${document.getElementById("deliveryAddress").value}</p>
-
         <hr class="my-3">
-
         <div class="text-right w-full">
-          ${offerItems
-            .map(i => `
-              <div class='flex justify-between border-b py-1'>
-                <span>${i.name}</span>
-                <span>${i.price.toFixed(2)} €</span>
-              </div>
-            `)
-            .join("")}
+          ${offerItems.map(i=>`<div class='flex justify-between border-b py-1'><span>${i.name}</span><span>${i.price.toFixed(2)} €</span></div>`).join("")}
         </div>
-
-        <h3 class="mt-4 text-lg font-bold">
-          المجموع النهائي: ${document.getElementById("total").textContent} €
-        </h3>
-
-        <p class="text-sm text-gray-500 mt-2">
-          ⚠ ملاحظة: قد تكون هناك تكلفة توصيل وعمولة تحويل تُحدد لاحقاً.
-        </p>
+        <h3 class="mt-4 text-lg font-bold">المجموع النهائي: ${totalSpan.textContent} €</h3>
+        <p class="text-sm text-gray-500 mt-2">تنويه: قد تكون هناك تكلفة توصيل وعمولة تحويل تُحدد لاحقاً.</p>
       `;
     });
 
-    document.getElementById("generateRandomOfferBtn").addEventListener("click", () => {
-      const max = parseFloat(document.getElementById("randomOfferMax").value);
+    randomOfferMaxInput.addEventListener("input",()=>{ randomOfferMaxValue=parseFloat(randomOfferMaxInput.value); });
 
-      offerItems = [];
-      let total = 0;
-
-      const shuffled = [...products].sort(() => Math.random() - 0.5);
-
-      for (let p of shuffled) {
-        if (total + p.price <= max) {
-          offerItems.push(p);
-          total += p.price;
-        }
-      }
-
-      renderOffer();
-      updateTotal();
+    generateRandomOfferBtn.addEventListener("click",()=>{
+      offerItems=[];
+      const foodProducts=products.filter(p=>p.category==="مواد غذائية" && p.price<=randomOfferMaxValue);
+      let total=0;
+      const shuffled=[...foodProducts].sort(()=>Math.random()-0.5);
+      for(let p of shuffled){ if(total+p.price<=randomOfferMaxValue){ offerItems.push(p); total+=p.price; } }
+      renderOfferItems(); updateTotal(); showPreviewBtn.click();
     });
 
   </script>
-
 </body>
 </html>
