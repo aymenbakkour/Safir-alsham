@@ -47,7 +47,7 @@
 <body class="bg-gray-100 p-3">
   <div class="container-wrapper">
 
-    <h2 class="text-2xl font-extrabold text-center mb-4 text-gray-800">سفير الشام – إدارة المنتجات والعروض</h2>
+    <h2 class="text-2xl font-extrabold text-center mb-4 text-gray-800">سفير الشام – طلب المنتجات</h2>
 
     <!-- إضافة منتج -->
     <div class="section-box">
@@ -61,7 +61,6 @@
           <option value="رصيد موبايل">رصيد موبايل</option>
         </select>
         <input id="pPrice" class="form-control" type="number" placeholder="السعر (€)" min="0.01" step="0.01">
-                  <br>
         <button type="submit" class="btn btn-primary">إضافة المنتج</button>
       </form>
     </div>
@@ -73,19 +72,18 @@
         <button id="exportProductsBtn" class="btn btn-primary btn-sm">تصدير Excel</button>
       </div>
       <input id="productSearch" class="form-control mb-3" type="text" placeholder="بحث عن منتج...">
-        <br>
       <div id="productsArea"><p class="text-gray-500 text-center">لا توجد منتجات بعد.</p></div>
     </div>
 
     <!-- عناصر العرض -->
     <div class="section-box">
-      <h4 class="text-xl font-bold mb-4">عناصر العرض</h4>
-      <div id="offerItems"><p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للعرض.</p></div>
+      <h4 class="text-xl font-bold mb-4">عناصر الطلب</h4>
+      <div id="offerItems"><p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للطلب.</p></div>
     </div>
 
     <!-- إنشاء العرض -->
     <div class="section-box">
-      <h4 class="text-xl font-bold mb-4">إنشاء عرض</h4>
+      <h4 class="text-xl font-bold mb-4">إنشاء الطلب</h4>
       <div class="grid grid-cols-1 md-grid-cols-3 gap-4">
         <input id="customerName" type="text" class="form-control" placeholder="ادخل اسمك">
         <input id="customerWhatsApp" type="text" class="form-control" placeholder="رقم واتساب للتواصل">
@@ -97,18 +95,18 @@
       </h4>
 
       <div class="grid grid-cols-1 md-grid-cols-2 gap-4 mt-4">
-        <button id="showPreviewBtn" class="btn btn-success" disabled>معاينة العرض</button>
+        <button id="showPreviewBtn" class="btn btn-success" disabled>معاينة الطلب</button>
         <div class="flex flex-col gap-2">
           <input id="randomOfferMax" type="number" class="form-control" value="40" min="0" step="0.01">
-          <button id="generateRandomOfferBtn" class="btn btn-indigo">إنشاء عرض عشوائي</button>
+          <button id="generateRandomOfferBtn" class="btn btn-indigo">إنشاء طلب عشوائي</button>
         </div>
       </div>
     </div>
 
     <!-- المعاينة -->
     <div class="section-box">
-      <h4 class="text-xl font-bold mb-4">معاينة العرض</h4>
-      <div id="preview"><p class="text-gray-500">قم بإنشاء عرض للمعاينة.</p></div>
+      <h4 class="text-xl font-bold mb-4">معاينة الطلب</h4>
+      <div id="preview"><p class="text-gray-500">قم بإنشاء طلب للمعاينة.</p></div>
       <button id="downloadImageBtn" class="btn btn-primary mt-4" disabled>تصدير كصورة</button>
     </div>
 
@@ -175,7 +173,7 @@
     function addToOffer(id){ const product=products.find(p=>p.id===id); offerItems.push({...product}); renderOfferItems(); updateTotal(); }
     function removeFromOffer(index){ offerItems.splice(index,1); renderOfferItems(); updateTotal(); }
     function renderOfferItems(){
-      if(!offerItems.length){ offerDiv.innerHTML=`<p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للعرض.</p>`; return; }
+      if(!offerItems.length){ offerDiv.innerHTML=`<p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للطلب.</p>`; return; }
       offerDiv.innerHTML="";
       offerItems.forEach((item,index)=>{
         const div=document.createElement("div"); div.className="offer-item";
@@ -194,7 +192,7 @@
 
     showPreviewBtn.addEventListener("click",()=>{
       previewDiv.innerHTML=`
-        <h3 class="font-bold text-xl mb-2">💙 سفير الشام – عرض خاص</h3>
+        <h3 class="font-bold text-xl mb-2">💙 سفير الشام – طلب المنتجات</h3>
         <p><strong>الاسم:</strong> ${document.getElementById("customerName").value}</p>
         <p><strong>واتساب:</strong> ${document.getElementById("customerWhatsApp").value}</p>
         <p><strong>العنوان:</strong> ${document.getElementById("deliveryAddress").value}</p>
