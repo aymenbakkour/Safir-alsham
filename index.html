@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -62,7 +61,6 @@
           <option value="رصيد موبايل">رصيد موبايل</option>
         </select>
         <input id="pPrice" class="form-control" type="number" placeholder="السعر (€)" min="0.01" step="0.01">
-        <br/><br/>
         <button type="submit" class="btn btn-primary">إضافة المنتج</button>
       </form>
     </div>
@@ -74,7 +72,6 @@
         <button id="exportProductsBtn" class="btn btn-primary btn-sm">تصدير Excel</button>
       </div>
       <input id="productSearch" class="form-control mb-3" type="text" placeholder="بحث عن منتج...">
-      <br/><br/>
       <div id="productsArea"><p class="text-gray-500 text-center">لا توجد منتجات بعد.</p></div>
     </div>
 
@@ -116,7 +113,173 @@
   </div>
 
   <script>
-    let products = [];
+    /* helper to generate unique ids */
+    function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+    /* ======== منتجات مضافة مسبقاً (كما طلبت) ======== */
+    let products = [
+      /* ================= مواد غذائية ================= */
+      {id: generateId(), name:"لوز مقشور", category:"مواد غذائية", price:12.50},
+      {id: generateId(), name:"كاجو", category:"مواد غذائية", price:10.45},
+      {id: generateId(), name:"جوز هند فرط", category:"مواد غذائية", price:6.70},
+      {id: generateId(), name:"سمسم", category:"مواد غذائية", price:3.35},
+      {id: generateId(), name:"حمص", category:"مواد غذائية", price:3.35},
+      {id: generateId(), name:"فاصولياء مصرية", category:"مواد غذائية", price:2.10},
+      {id: generateId(), name:"زيت 4 لتر", category:"مواد غذائية", price:8.35},
+      {id: generateId(), name:"زيت 1 لتر", category:"مواد غذائية", price:2.10},
+      {id: generateId(), name:"زيت زيتون سيدي هشام 250غ", category:"مواد غذائية", price:2.10},
+      {id: generateId(), name:"زيتون أخضر", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"زيتون أسود مكلس", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"زبدة لورباك", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"زبدة طيبة", category:"مواد غذائية", price:0.50},
+      {id: generateId(), name:"زبدة أونا", category:"مواد غذائية", price:0.60},
+      {id: generateId(), name:"سمنة الأصيل 1كغ", category:"مواد غذائية", price:4.20},
+      {id: generateId(), name:"سمنة الأصيل 2كغ", category:"مواد غذائية", price:8.35},
+      {id: generateId(), name:"سمنة كلارا 1كغ", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"سمنة كلارا 2كغ", category:"مواد غذائية", price:5.85},
+      {id: generateId(), name:"سمنة مرغريتا 1كغ", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"سمنة مرغريتا 2كغ", category:"مواد غذائية", price:5.85},
+      {id: generateId(), name:"سمنة الخير 1كغ", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"سمنة الخير 2كغ", category:"مواد غذائية", price:58.35},
+      {id: generateId(), name:"مرتديلا التغذية", category:"مواد غذائية", price:1.50},
+      {id: generateId(), name:"هنا صغير", category:"مواد غذائية", price:0.70},
+      {id: generateId(), name:"هنا وسط", category:"مواد غذائية", price:1.20},
+      {id: generateId(), name:"طون سيدي هشام حلو", category:"مواد غذائية", price:1.20},
+      {id: generateId(), name:"طون سيدي هشام حار", category:"مواد غذائية", price:1.20},
+      {id: generateId(), name:"طون ليو حلو", category:"مواد غذائية", price:1.05},
+      {id: generateId(), name:"طون ليو حار", category:"مواد غذائية", price:1.05},
+      {id: generateId(), name:"سردين مغربي حلو", category:"مواد غذائية", price:0.75},
+      {id: generateId(), name:"سردين مغربي حار", category:"مواد غذائية", price:0.75},
+      {id: generateId(), name:"رز مصري", category:"مواد غذائية", price:1.00},
+      {id: generateId(), name:"رز تايلندي حبة طويلة", category:"مواد غذائية", price:1.00},
+      {id: generateId(), name:"رز كريمي محمود", category:"مواد غذائية", price:1.50},
+      {id: generateId(), name:"برغل خشن", category:"مواد غذائية", price:0.85},
+      {id: generateId(), name:"برغل ناعم", category:"مواد غذائية", price:0.85},
+      {id: generateId(), name:"عدس مجروش", category:"مواد غذائية", price:1.25},
+      {id: generateId(), name:"عدس أسود", category:"مواد غذائية", price:1.25},
+      {id: generateId(), name:"سكر", category:"مواد غذائية", price:0.75},
+      {id: generateId(), name:"طحين", category:"مواد غذائية", price:0.70},
+      {id: generateId(), name:"سميد", category:"مواد غذائية", price:0.85},
+      {id: generateId(), name:"معكرونة باشكالا", category:"مواد غذائية", price:0.95},
+      {id: generateId(), name:"شعيرية", category:"مواد غذائية", price:0.95},
+      {id: generateId(), name:"مربى خضراوي مشمش", category:"مواد غذائية", price:0.85},
+      {id: generateId(), name:"مربى خضراوي تمر", category:"مواد غذائية", price:0.85},
+      {id: generateId(), name:"حلاوة البرج 400غ", category:"مواد غذائية", price:2.20},
+      {id: generateId(), name:"حلاوة البرج 800غ", category:"مواد غذائية", price:4.20},
+      {id: generateId(), name:"راحة زهر البان", category:"مواد غذائية", price:0.70},
+      {id: generateId(), name:"كتشب", category:"مواد غذائية", price:0.60},
+      {id: generateId(), name:"كوفر", category:"مواد غذائية", price:0.50},
+      {id: generateId(), name:"هوت شوكلت الحموي", category:"مواد غذائية", price:0.21},
+      {id: generateId(), name:"٣ب١ الحموي", category:"مواد غذائية", price:0.17},
+      {id: generateId(), name:"قهوة سريعة التحضير الحموي", category:"مواد غذائية", price:0.08},
+      {id: generateId(), name:"بن الشامي اكسترا 500غ", category:"مواد غذائية", price:8.35},
+      {id: generateId(), name:"بن الشامي اكسترا 200غ", category:"مواد غذائية", price:3.35},
+      {id: generateId(), name:"بن الشامي كيس 10 غلوة اكسترا", category:"مواد غذائية", price:3.35},
+      {id: generateId(), name:"بن الشامي قهوة مرة", category:"مواد غذائية", price:1.25},
+      {id: generateId(), name:"بن الحموي هال اكسترا غامق 200غ", category:"مواد غذائية", price:3.05},
+      {id: generateId(), name:"بن الحموي اكسترا 200غ", category:"مواد غذائية", price:3.35},
+      {id: generateId(), name:"بن الحموي كلاسيك 200غ", category:"مواد غذائية", price:2.95},
+      {id: generateId(), name:"بن الحموي برايت 200غ", category:"مواد غذائية", price:2.50},
+      {id: generateId(), name:"بن الحموي موكا 200غ", category:"مواد غذائية", price:2.35},
+
+      /* =============== ألبان =============== */
+      {id: generateId(), name:"جبنة المراعي دهن", category:"ألبان", price:1.25},
+      {id: generateId(), name:"جبنة غودي دهن", category:"ألبان", price:1.20},
+      {id: generateId(), name:"جبنة السهول دهن", category:"ألبان", price:1.70},
+      {id: generateId(), name:"جبنة نيو بارك دهن", category:"ألبان", price:0.95},
+      {id: generateId(), name:"لبنة نيوبارك", category:"ألبان", price:1.20},
+      {id: generateId(), name:"لبنة مدعبلة البقرة المشاكسة 1.4كغ", category:"ألبان", price:3.80},
+      {id: generateId(), name:"جبنة كيري 6 أقراص", category:"ألبان", price:1.85},
+      {id: generateId(), name:"جبنة أبو الولد 8 أقراص", category:"ألبان", price:1.25},
+      {id: generateId(), name:"جبنة قشقوان لمة العيلة 250غ", category:"ألبان", price:1.70},
+      {id: generateId(), name:"جبنة دهن فرط", category:"ألبان", price:2.95},
+      {id: generateId(), name:"جبنة بيضاء فرط", category:"ألبان", price:4.20},
+      {id: generateId(), name:"جبنة مشللة فرط", category:"ألبان", price:6.70},
+
+      /* =============== مشروبات =============== */
+      {id: generateId(), name:"شاي كامبو 25ظ", category:"مشروبات", price:0.60},
+      {id: generateId(), name:"شاي سيدي هشام 25ظ", category:"مشروبات", price:0.95},
+      {id: generateId(), name:"شاي الكرزة 25ظ", category:"مشروبات", price:0.95},
+      {id: generateId(), name:"شاي سيدي هشام 90غ", category:"مشروبات", price:0.95},
+      {id: generateId(), name:"كولا عائلي ماستر", category:"مشروبات", price:1.00},
+      {id: generateId(), name:"كولا وسط ماستر", category:"مشروبات", price:0.65},
+      {id: generateId(), name:"كولا صغير ماستر", category:"مشروبات", price:0.35},
+      {id: generateId(), name:"كولا عائلي بيبسي", category:"مشروبات", price:1.35},
+      {id: generateId(), name:"كولا وسط بيبسي", category:"مشروبات", price:0.70},
+      {id: generateId(), name:"عصير طبيعي فروتي 1 لتر", category:"مشروبات", price:0.95},
+      {id: generateId(), name:"عصير طبيعي 1.5 لتر", category:"مشروبات", price:1.35},
+      {id: generateId(), name:"عصير فروتي قزاز", category:"مشروبات", price:0.45},
+      {id: generateId(), name:"راني حبيبات تنك", category:"مشروبات", price:0.45},
+      {id: generateId(), name:"العطار شاي أخضر", category:"مشروبات", price:1.50},
+      {id: generateId(), name:"العطار كمون وليمون", category:"مشروبات", price:1.50},
+      {id: generateId(), name:"العطار زهورات شامية", category:"مشروبات", price:1.50},
+      {id: generateId(), name:"العطار بابونج", category:"مشروبات", price:1.50},
+
+      /* =============== معسل =============== */
+      {id: generateId(), name:"معسل مزايا تفاحتين", category:"معسل", price:1.00},
+      {id: generateId(), name:"معسل مزايا تفاحتين بحريني", category:"معسل", price:1.00},
+      {id: generateId(), name:"معسل الفاخر تفاحتين", category:"معسل", price:1.20},
+      {id: generateId(), name:"معسل نخلة تفاحتين", category:"معسل", price:3.20},
+      {id: generateId(), name:"معسل مزايا ليمون ونعنع", category:"معسل", price:1.00},
+      {id: generateId(), name:"معسل مزايا علكة ونعنع", category:"معسل", price:1.00},
+
+      /* =============== توابل =============== */
+      {id: generateId(), name:"فلفل أسود ناعم", category:"توابل", price:10.45},
+      {id: generateId(), name:"كمون ناعم", category:"توابل", price:6.25},
+      {id: generateId(), name:"كمون حب", category:"توابل", price:6.25},
+      {id: generateId(), name:"كبسة", category:"توابل", price:6.25},
+      {id: generateId(), name:"مشكلة", category:"توابل", price:6.25},
+      {id: generateId(), name:"كزبرة ناعمة", category:"توابل", price:2.55},
+      {id: generateId(), name:"قرفة خشنة", category:"توابل", price:5.05},
+      {id: generateId(), name:"قرفة ناعمة", category:"توابل", price:5.05},
+      {id: generateId(), name:"نعنع يابس", category:"توابل", price:4.20},
+      {id: generateId(), name:"كاري", category:"توابل", price:4.20},
+      {id: generateId(), name:"حبة بركة", category:"توابل", price:4.20},
+      {id: generateId(), name:"فليفلة حلوة", category:"توابل", price:5.05},
+      {id: generateId(), name:"فليفلة حارة", category:"توابل", price:5.05},
+
+      /* =============== منتجات تنظيف =============== */
+      {id: generateId(), name:"فوط ليبرس", category:"منتجات تنظيف", price:0.95},
+      {id: generateId(), name:"فوط فنطش 3كغ قياس 3", category:"منتجات تنظيف", price:8.35},
+      {id: generateId(), name:"فوط فنطش 3كغ قياس 4", category:"منتجات تنظيف", price:8.35},
+      {id: generateId(), name:"فوط فنطش 3كغ قياس 5", category:"منتجات تنظيف", price:8.35},
+      {id: generateId(), name:"شامبو أوليفا عرض 400 مل + 200 مل", category:"منتجات تنظيف", price:2.50},
+      {id: generateId(), name:"شامبو هيد أند شولدرز", category:"منتجات تنظيف", price:2.95},
+      {id: generateId(), name:"شامبو كليستو", category:"منتجات تنظيف", price:2.10},
+      {id: generateId(), name:"شامبو كلير", category:"منتجات تنظيف", price:2.50},
+      {id: generateId(), name:"شامبو أطفال هامول", category:"منتجات تنظيف", price:2.10},
+      {id: generateId(), name:"بلسم نورا", category:"منتجات تنظيف", price:1.25},
+      {id: generateId(), name:"دواء غسيل نورا 700غ أوتوماتيك", category:"منتجات تنظيف", price:1.25},
+      {id: generateId(), name:"دواء غسيل نورا 80غ عادي", category:"منتجات تنظيف", price:0.20},
+      {id: generateId(), name:"دواء غسيل مدار 80غ عادي", category:"منتجات تنظيف", price:0.20},
+      {id: generateId(), name:"معطر كرمل", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"معطر ليتس", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"معطر العافية", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"معطر بوفالو", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"سائل جلي كرمل", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"سائل جلي ليتس", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"سائل جلي بوفالو", category:"منتجات تنظيف", price:1.00},
+      {id: generateId(), name:"فلاش مدار", category:"منتجات تنظيف", price:0.70},
+      {id: generateId(), name:"كلور كرمل", category:"منتجات تنظيف", price:0.70},
+      {id: generateId(), name:"صابون بوفالو", category:"منتجات تنظيف", price:0.50},
+      {id: generateId(), name:"صابون الوزير", category:"منتجات تنظيف", price:0.20},
+      {id: generateId(), name:"صابون غار الملكة الأصلي", category:"منتجات تنظيف", price:0.45},
+      {id: generateId(), name:"صابون زهر الزيتون أبيض", category:"منتجات تنظيف", price:0.25},
+      {id: generateId(), name:"سيفة العائلة الأصلية", category:"منتجات تنظيف", price:0.45},
+
+      /* =============== منتجات أخرى =============== */
+      {id: generateId(), name:"فحم الزعيم جوز الهند", category:"منتجات أخرى", price:3.35},
+      {id: generateId(), name:"فحم الهيبة جوز الهند", category:"منتجات أخرى", price:3.35},
+      {id: generateId(), name:"فحم شيري", category:"منتجات أخرى", price:1.00},
+      {id: generateId(), name:"فحم مرجانة", category:"منتجات أخرى", price:0.25},
+      {id: generateId(), name:"سلفان الأصيل", category:"منتجات أخرى", price:0.45},
+      {id: generateId(), name:"بويا كات أسود", category:"منتجات أخرى", price:0.50},
+      {id: generateId(), name:"فاربن مربع", category:"منتجات أخرى", price:0.50},
+      {id: generateId(), name:"ميم مربع", category:"منتجات أخرى", price:0.50},
+      {id: generateId(), name:"نكاشات أذن 200 عود", category:"منتجات أخرى", price:0.25},
+    ];
+
+    /* باقي المتغيرات والوظائف */
     let offerItems = [];
     let searchTerm = "";
     let openCategories = {};
@@ -135,8 +298,7 @@
     const downloadImageBtn = document.getElementById("downloadImageBtn");
     const generateRandomOfferBtn = document.getElementById("generateRandomOfferBtn");
     const randomOfferMaxInput = document.getElementById("randomOfferMax");
-
-    function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+    const exportProductsBtn = document.getElementById("exportProductsBtn");
 
     function updateTotal() {
       let total = offerItems.reduce((sum,i)=>sum+i.price,0);
@@ -153,6 +315,7 @@
         if(!grouped[p.category]) grouped[p.category]=[];
         grouped[p.category].push(p);
       });
+      // ضمان ترتيب الفئات في نفس تسلسل الاضافة (حسب المفتاح)
       Object.keys(grouped).forEach(cat=>{
         const catBox=document.createElement("div");
         const catHeader=document.createElement("div");
@@ -173,8 +336,19 @@
       if(!products.length) productsArea.innerHTML=`<p class="text-gray-500 text-center">لا توجد منتجات بعد.</p>`;
     }
 
-    function addToOffer(id){ const product=products.find(p=>p.id===id); offerItems.push({...product}); renderOfferItems(); updateTotal(); }
-    function removeFromOffer(index){ offerItems.splice(index,1); renderOfferItems(); updateTotal(); }
+    function addToOffer(id){
+      const product=products.find(p=>p.id===id);
+      if(product) {
+        offerItems.push({...product});
+        renderOfferItems();
+        updateTotal();
+      }
+    }
+    function removeFromOffer(index){
+      offerItems.splice(index,1);
+      renderOfferItems();
+      updateTotal();
+    }
     function renderOfferItems(){
       if(!offerItems.length){ offerDiv.innerHTML=`<p class="text-gray-500 text-center">لم يتم إضافة أي منتجات للطلب.</p>`; return; }
       offerDiv.innerHTML="";
@@ -191,6 +365,7 @@
       products.push({id:generateId(), name:pName.value, category:pCat.value, price:parseFloat(pPrice.value)});
       pName.value=""; pPrice.value=""; renderProducts();
     });
+
     searchInput.addEventListener("input",()=>{ searchTerm=searchInput.value; renderProducts(); });
 
     showPreviewBtn.addEventListener("click",()=>{
@@ -219,12 +394,78 @@
       renderOfferItems(); updateTotal(); showPreviewBtn.click();
     });
 
+    /* تنزيل المعاينة كصورة (يتم تفعيل الزر ولكن سنعطي تنفيذ بسيط) */
+    downloadImageBtn.addEventListener("click",()=>{
+      // تنفيذ بسيط: نسخ نص المعاينة إلى نافذة جديدة للطباعة
+      const w = window.open("", "_blank");
+      w.document.write(`<html dir="rtl"><head><meta charset="utf-8"><title>معاينة الطلب</title></head><body>${previewDiv.innerHTML}</body></html>`);
+      w.document.close();
+      w.print();
+    });
+
+    /* زر تصدير المنتجات كـ CSV / Excel بسيط */
+    exportProductsBtn.addEventListener("click",()=>{
+      const rows = [["Category","Name","Price"]];
+      products.forEach(p=> rows.push([p.category, p.name, p.price.toFixed(2)]));
+      const csvContent = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "products.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    /* تفعيل البحث الافتراضي وإظهار المنتجات */
+    renderProducts();
+
   </script>
-</body>
+
+  <!-- Code injected by live-server (إن وُجد) -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
   <!-- Footer -->
   <footer style="text-align:center; padding:1rem; margin-top:2rem; font-size:0.875rem; color:#6b7280;">
-    تم تطويره بوساطة <a href="https://www.behance.net/aymenbakkour" target="_blank" style="color:#2563eb; text-decoration:none;">أيمن بكور  </footer>
-</body>
-</html>
+    تم تطويره بوساطة <strong>أيمن بكور</strong> – 
+    <a href="https://www.behance.net/aymenbakkour" target="_blank" style="color:#2563eb; text-decoration:none;">مشاهدة أعمالي على Behance</a>
+  </footer>
 
+</body>
 </html>
